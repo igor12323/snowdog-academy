@@ -6,12 +6,12 @@ class Index
 {
     public function index(): void
     {
-        if ($_SESSION['is_admin']) {
+        if (isset($_SESSION['login'])&&$_SESSION['is_admin']) {
             header('Location: /admin');
             return;
         }
 
-        if ($_SESSION['login']) {
+        if (isset($_SESSION['login'])) {
             header('Location: /books');
             return;
         }

@@ -16,6 +16,6 @@ class InactiveUsersMenu extends AbstractMenu
 
     public function isVisible(): bool
     {
-        return $_SESSION['login'] && $_SESSION['is_admin'];
+        return isset($_SESSION['login'])&& $_SESSION['is_admin'];
     }
 }

@@ -16,6 +16,7 @@ class LoginMenu extends AbstractMenu
 
     public function isVisible(): bool
     {
-        return !$_SESSION['login'];
+        return empty($_SESSION['login']);// changed ! to 'empty'
+       
     }
 }

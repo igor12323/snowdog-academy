@@ -1,0 +1,25 @@
+<?php use Snowdog\Academy\Model\Book;
+
+require_once(__DIR__ . '/../../common/header.phtml');
+
+$action = '/admin/load_book';
+
+?>
+
+<section id="load-books-form" class="padded">
+    <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="<?= $action ?>">
+        <div class="form-group">
+            <label for="myfile" class="col-sm-1 control-label">File:</label>
+            <div class="col-sm-10">
+                <input type="file" id="myfile" name="myfile"  class="form-control" accept=".csv" /> 
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-1 col-sm-2">
+                <button type="submit" class="btn btn-primary">Load books</button>
+            </div>
+        </div>
+    </form>
+</section>
+
+<?php require_once(__DIR__ . '/../../common/footer.phtml'); ?>

@@ -13,7 +13,7 @@ class Book
 
     public function __construct(BorrowManager $borrowManager, UserManager $userManager)
     {
-        if (!isset($_SESSION['login'])) {
+        if (empty($_SESSION['login'])) {
             header('Location: /');
             return;
         }

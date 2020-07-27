@@ -43,6 +43,7 @@ class Books extends AdminAbstract
 
         $_SESSION['flash'] = "Book $title by $author saved!";
         header('Location: /admin');
+        
     }
 
     public function edit(int $id): void
@@ -74,9 +75,56 @@ class Books extends AdminAbstract
         $_SESSION['flash'] = "Book $title by $author saved!";
         header('Location: /admin');
     }
+    
+    public function loadBooks() : void
+    {
+        require __DIR__ . '/../../view/admin/books/load.phtml';
+    }
 
+    public function loadBooksPost(): void
+    {
+        $max_size = 1024*1024;
+        if (is_uploaded_file($_FILES['myfile']['tmp_name'])) 
+        {
+            if ($_FILES['myfile']['size'] > $max_size) 
+            {
+                $_SESSION['flash'] = 'The file is too large!';
+                header('Location: ' . $_SERVER['HTTP_REFERER']);
+                return;
+            } 
+            else 
+            {
+                move_uploaded_file($_FILES['myfile']['tmp_name'], $_SERVER['DOCUMENT_ROOT'].'/'.$_FILES['myfile']['name']);
+                if(($file=fopen($_SERVER['DOCUMENT_ROOT'].'/'.$_FILES['myfile']['name'],"r"))!==false)
+                {
+                    while (($data = fgetcsv($file, 1000,';')) !== FALSE) 
+                    {	
+                        if (empty($data[0]) || empty($data[1]) || empty([2])||count($data)!=3)
+                        {
+                            $_SESSION['flash'] ='Incorrect data!';
+                            header('Location: ' . $_SERVER['HTTP_REFERER']);
+                            return;
+                        }
+                        $this->bookManager->create($data[0], $data[1], $data[2]);
+                    }
+                    fclose($file);
+                }
+                unlink($_SERVER['DOCUMENT_ROOT'].'/'.$_FILES['myfile']['name']);
+                $_SESSION['flash'] = "Added books from file!";
+                header('Location: /admin');
+            }
+        } 
+        else 
+        {
+            $_SESSION['flash'] ='Missing data';
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            return;
+        }
+    }
     private function getBooks(): array
     {
         return $this->bookManager->getAllBooks();
     }
+
+    
 }
