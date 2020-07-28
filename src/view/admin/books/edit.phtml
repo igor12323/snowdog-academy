@@ -1,7 +1,7 @@
 <?php use Snowdog\Academy\Model\Book;
 
 require_once(__DIR__ . '/../../common/header.phtml');
-
+$path=__DIR__.'/editScripts.js';
 $action = '/admin/new_book';
 if ($this->book instanceof Book) {
     $title = $this->book->getTitle();
@@ -10,7 +10,7 @@ if ($this->book instanceof Book) {
     $action = '/admin/edit_book/' . $this->book->getId();
 }
 ?>
-
+<script type="text/javascript" src=<?=$path?>></script>
 <section id="new-book-form" class="padded">
     <form class="form-horizontal" method="POST" action="<?= $action ?>">
         <div class="form-group">
@@ -28,7 +28,10 @@ if ($this->book instanceof Book) {
         <div class="form-group">
             <label for="isbn" class="col-sm-1 control-label">ISBN:</label>
             <div class="col-sm-10">
-                <input type="text" id="isbn" name="isbn" class="form-control" value="<?= $isbn ?? ''?>" required/>
+                <input type="text" id="isbn" onchange="checkValue()" name="isbn" class="form-control" value="<?= $isbn ?? ''?>" required/>
+            </div>
+            <div class="col-sm-1 col-sm-2" >
+                <button type="button" onclick="getValues()" class="btn btn-success" id="loadBook" disabled="disabled">Load book</button>
             </div>
         </div>
         <div class="form-group">
