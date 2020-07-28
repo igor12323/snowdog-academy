@@ -1,20 +1,16 @@
 <?php use Snowdog\Academy\Model\Book;
 
-require_once(__DIR__ . '/../../common/header.phtml'); 
-$action = '/admin/show/0';
+require_once(__DIR__ . '/../../common/header.phtml');
+$number_of_days=$this->numberOfDays->getNumber();
+$action = '/admin/show/'.$this->numberOfDays->getNumber();
 ?>
-
-<section id="add" class="padded">
-    <a href="/admin/new_book" class="btn btn-primary">Add new book</a>
-    <a href="/admin/load_book" class="btn btn-primary">Load books from .CSV</a>
-</section>
 
 <section id="search" class="padded"> 
     <form class="form-horizontal" method="POST" action="<?= $action ?>">
         <div class="form-group">
-            <label for="borrowed-days" class="col-sm-3 control-label">Books borrowed more then (days): </label>
+            <label for="borrowed-days" class="col-sm-3 control-label">Books borrowed more then (days):</label>
             <div class="col-sm-2">
-                <input type="number" id="borrowed-days" name="number_of_days" class="form-control" min="0" max="99" value="<?=0?>" required/>
+                <input type="number" id="borrowed-days" name="number_of_days" class="form-control" min="0" max="99" value="<?=$number_of_days?>" required/>
             </div>
             <div class="col-sm-1">
                 <button type="submit" class="btn btn-primary">Show</button>
@@ -23,8 +19,15 @@ $action = '/admin/show/0';
     </form>
 </section>
 
-<section id="book-list" class="padded">
-    <h3>Book</h3>
+<section id="book-list1" class="padded">
+    <?php
+    $day="day";
+    if($number_of_days!=1)
+    {
+        $day="days";
+    } 
+    ?>
+    <h3>Book list borrowed more then <?= $number_of_days ?> <?=$day?></h3>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -36,7 +39,7 @@ $action = '/admin/show/0';
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($this->getBooks() as $book): /** @var Book $book */?>
+            <?php foreach ($this->getBooksByDays($number_of_days) as $book): /** @var Book $book */?>
             <tr>
                 <td><?= $book->getId()?></td>
                 <td><?= $book->getTitle()?></td>
@@ -50,6 +53,4 @@ $action = '/admin/show/0';
     </table>
 </section>
 
-
 <?php require_once(__DIR__ . '/../../common/footer.phtml'); ?>
-

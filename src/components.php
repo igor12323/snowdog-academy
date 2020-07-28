@@ -40,6 +40,8 @@ RouteRepository::registerRoute('GET', '/admin/edit_book/{id:\d+}', Admin\Books::
 RouteRepository::registerRoute('POST', '/admin/edit_book/{id:\d+}', Admin\Books::class, 'editPost');
 RouteRepository::registerRoute('GET', '/admin/user/list/{isActive:\d+}', Admin\User::class, 'list');
 RouteRepository::registerRoute('GET', '/admin/user/activate/{id:\d+}', Admin\User::class, 'activate');
+RouteRepository::registerRoute('GET', '/admin/show/{number_of_days:\d+}', Admin\Search::class, 'show');
+RouteRepository::registerRoute('POST', '/admin/show/{number_of_days:\d+}', Admin\Search::class, 'showPost');
 
 Menu::register(LoginMenu::class, 100);
 Menu::register(RegisterMenu::class, 200);

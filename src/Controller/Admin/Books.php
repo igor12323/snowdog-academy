@@ -4,16 +4,19 @@ namespace Snowdog\Academy\Controller\Admin;
 
 use Snowdog\Academy\Model\Book;
 use Snowdog\Academy\Model\BookManager;
+use Snowdog\Academy\Model\BorrowManager;
 
 class Books extends AdminAbstract
 {
     private BookManager $bookManager;
+    private BorrowManager $borrowManager;
     private ?Book $book;
 
-    public function __construct(BookManager $bookManager)
+    public function __construct(BookManager $bookManager,BorrowManager $borrowManager)
     {
         parent::__construct();
         $this->bookManager = $bookManager;
+        $this->borrowManager = $borrowManager;
         $this->book = null;
     }
 
@@ -125,6 +128,5 @@ class Books extends AdminAbstract
     {
         return $this->bookManager->getAllBooks();
     }
-
     
 }
