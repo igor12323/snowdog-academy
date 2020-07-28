@@ -29,11 +29,13 @@ class Login
             if ($user->isActive()) {
                 $_SESSION['login'] = $login;
                 $_SESSION['is_admin'] = $user->isAdmin();
+                $_SESSION['is_child']=$user->isChild();
                 $_SESSION['flash'] = 'Hello ' . $user->getLogin() . '!';
 
                 if ($_SESSION['is_admin']) {
                     header('Location: /admin');
-                } else {
+                }
+                 else {
                     header('Location: /');
                 }
                 return;
@@ -51,7 +53,7 @@ class Login
     public function logout(): void
     {
         if (isset($_SESSION['login'])) {
-            unset($_SESSION['login'], $_SESSION['is_admin']);
+            unset($_SESSION['login'], $_SESSION['is_admin'],$_SESSION['is_child']);
             $_SESSION['flash'] = 'Logged out successfully';
         }
 

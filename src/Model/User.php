@@ -9,6 +9,7 @@ class User
     public string $password;
     public bool $is_admin;
     public bool $is_active;
+    public bool $is_child;
 
     public function getId(): int
     {
@@ -34,4 +35,10 @@ class User
     {
         return (bool) $this->is_active;
     }
+
+    public function isChild(): bool
+    {
+        return (bool) $this->is_child;
+    }
+
 }

@@ -35,6 +35,7 @@ $action = '/admin/show/'.$this->numberOfDays->getNumber();
                 <th>Title</th>
                 <th>Author</th>
                 <th>ISBN</th>
+                <th>Is for child</th>
                 <th>Borrowed</th>
             </tr>
         </thead>
@@ -45,6 +46,7 @@ $action = '/admin/show/'.$this->numberOfDays->getNumber();
                 <td><?= $book->getTitle()?></td>
                 <td><?= $book->getAuthor()?></td>
                 <td><?= $book->getIsbn()?></td>
+                <td><?= $book->isForChild()?></td>
                 <td><?= $book->isBorrowed() ? 'Yes' : 'No' ?></td>
                 <td><a href="/admin/edit_book/<?=$book->getId()?>">Edit</a></td>
             </tr>

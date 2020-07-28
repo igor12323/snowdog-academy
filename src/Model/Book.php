@@ -15,6 +15,7 @@ class Book
     private string $isbn;
     private bool $borrowed;
     private ?string $borrowed_at;
+    private bool $is_for_child;
 
     public function getId(): int
     {
@@ -41,6 +42,11 @@ class Book
         return $this->borrowed;
     }
 
+    public function isForChild():bool
+    {
+        return $this->is_for_child;
+    }
+    
     public function getReturnTime(): string
     {
         $dateTime = DateTime::createFromFormat(self::DATETIME_FORMAT, $this->borrowed_at);

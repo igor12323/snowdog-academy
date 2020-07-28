@@ -51,13 +51,19 @@ class BookManager
     public function getAllBooks(): array
     {
         $query = $this->database->query('SELECT * FROM books');
-
         return $query->fetchAll(Database::FETCH_CLASS, Book::class);
     }
 
     public function getAvailableBooks(): array
     {
-        $query = $this->database->query('SELECT * FROM books WHERE borrowed = 0');
+        if($_SESSION['is_child'])
+        { 
+           $query = $this->database->query('SELECT * FROM books WHERE borrowed = 0 and is_for_child=true');
+        }
+        else
+        { 
+           $query = $this->database->query('SELECT * FROM books WHERE borrowed = 0');
+        }
 
         return $query->fetchAll(Database::FETCH_CLASS, Book::class);
     }

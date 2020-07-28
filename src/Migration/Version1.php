@@ -31,6 +31,7 @@ CREATE TABLE `users` (
   `password` varchar(128) NOT NULL,
   `is_admin` boolean NOT NULL default 0,
   `is_active` boolean NOT NULL default 0,
+  'is_child' boolean not null default 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -40,10 +41,10 @@ SQL;
 
     private function addUsers(): void
     {
-        $this->userManager->create('admin', 'admin', true, true);
+        $this->userManager->create('admin', 'admin', true, true,false);
 
-        $this->userManager->create('baca', 'zaq12wsx', false, true);
-        $this->userManager->create('maca', 'xsw23edc', false, true);
+        $this->userManager->create('baca', 'zaq12wsx', false, true, false);
+        $this->userManager->create('maca', 'xsw23edc', false, true,true);
         $this->userManager->create('onuca', 'cde34rfv');
     }
 }
