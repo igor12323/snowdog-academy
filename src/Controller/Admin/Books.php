@@ -102,13 +102,21 @@ class Books extends AdminAbstract
                 {
                     while (($data = fgetcsv($file, 1000,';')) !== FALSE) 
                     {	
-                        if (empty($data[0]) || empty($data[1]) || empty([2])||count($data)!=3)
+                        if (empty($data[0]) || empty($data[1]) || empty($data[2])||(count($data)<3||count($data)>4))
                         {
                             $_SESSION['flash'] ='Incorrect data!';
                             header('Location: ' . $_SERVER['HTTP_REFERER']);
                             return;
                         }
-                        $this->bookManager->create($data[0], $data[1], $data[2]);
+                        elseif(count($data)==3)
+                        {
+                            $this->bookManager->create($data[0], $data[1], $data[2]);
+                        }
+                        else
+                        {
+                            $this->bookManager->create($data[0], $data[1], $data[2],$data[3]);
+                        }
+
                     }
                     fclose($file);
                 }
