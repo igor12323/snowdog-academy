@@ -25,15 +25,15 @@ class Version1
     private function createUsersTable(): void
     {
         $createQuery = <<<SQL
-CREATE TABLE `users` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `login` varchar(255) NOT NULL,
-  `password` varchar(128) NOT NULL,
-  `is_admin` boolean NOT NULL default 0,
-  `is_active` boolean NOT NULL default 0,
-  'is_child' boolean not null default 0,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `login` (`login`)
+CREATE TABLE users (
+  id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  login varchar(255) NOT NULL,
+  password varchar(128) NOT NULL,
+  is_admin boolean NOT NULL default 0,
+  is_active boolean NOT NULL default 0,
+  is_child boolean NOT NULL default 0,
+  PRIMARY KEY (id),
+  UNIQUE KEY login (login)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 SQL;
         $this->database->exec($createQuery);

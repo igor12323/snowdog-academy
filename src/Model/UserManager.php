@@ -36,7 +36,7 @@ class UserManager
     public function create(string $login, string $password, bool $isAdmin = false, bool $isActive = false, bool $is_child=false): int
     {
         $hash = $this->hashPassword($password);
-        $statement = $this->database->prepare('INSERT INTO users1 (login, password, is_admin, is_active) VALUES (:login, :password, :is_admin, :is_active, :is_child)');
+        $statement = $this->database->prepare('INSERT INTO users (login, password, is_admin, is_active, is_child) VALUES (:login, :password, :is_admin, :is_active, :is_child)');
         $statement->bindParam(':login', $login, Database::PARAM_STR);
         $statement->bindParam(':password', $hash, Database::PARAM_STR);
         $statement->bindParam(':is_admin', $isAdmin, Database::PARAM_BOOL);

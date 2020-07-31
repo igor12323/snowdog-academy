@@ -35,14 +35,15 @@ class Books extends AdminAbstract
         $title = $_POST['title'];
         $author = $_POST['author'];
         $isbn = $_POST['isbn'];
+        $forChild=$_POST['forChild'];
 
-        if (empty($title) || empty($author) || empty($isbn)) {
+        if (empty($title) || empty($author) || empty($isbn)||empty($forChild)) {
             $_SESSION['flash'] = 'Missing data';
             header('Location: ' . $_SERVER['HTTP_REFERER']);
             return;
         }
 
-        $this->bookManager->create($title, $author, $isbn);
+        $this->bookManager->create($title, $author, $isbn,$forChild);
 
         $_SESSION['flash'] = "Book $title by $author saved!";
         header('Location: /admin');

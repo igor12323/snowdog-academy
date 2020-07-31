@@ -13,15 +13,14 @@ class BookManager
         $this->database = $database;
     }
 
-    public function create(string $title, string $author, string $isbn): int
+    public function create(string $title, string $author, string $isbn, bool $is_for_child=false): int
     {
-        $statement = $this->database->prepare('INSERT INTO books (title, author, isbn) VALUES (:title, :author, :isbn)');
-        $binds = [
-            ':title' => $title,
-            ':author' => $author,
-            ':isbn' => $isbn
-        ];
-        $statement->execute($binds);
+        $statement = $this->database->prepare('INSERT INTO books (title, author, isbn, is_for_child) VALUES (:title, :author, :isbn, :is_for_child)');
+        $statement->bindParam(':title', $title, Database::PARAM_STR);
+        $statement->bindParam(':author', $author, Database::PARAM_STR);
+        $statement->bindParam(':isbn', $isbn, Database::PARAM_STR);
+        $statement->bindParam(':is_for_child', $is_for_child, Database::PARAM_BOOL);
+        $statement->execute();
 
         return (int) $this->database->lastInsertId();
     }
@@ -58,7 +57,7 @@ class BookManager
     {
         if($_SESSION['is_child'])
         { 
-           $query = $this->database->query('SELECT * FROM books WHERE borrowed = 0 and is_for_child=true');
+           $query = $this->database->query('SELECT * FROM books WHERE borrowed = 0 and is_for_child=1');
         }
         else
         { 

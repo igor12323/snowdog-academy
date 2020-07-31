@@ -43,7 +43,7 @@ $action = '/admin/show/0';
                 <td><?= $book->getTitle()?></td>
                 <td><?= $book->getAuthor()?></td>
                 <td><?= $book->getIsbn()?></td>
-                <td><?= $book->isForChild()?></td>
+                <td><?= $book->isForChild() ? 'Yes' : 'No' ?></td>
                 <td><?= $book->isBorrowed() ? 'Yes' : 'No' ?></td>
                 <td><a href="/admin/edit_book/<?=$book->getId()?>">Edit</a></td>
             </tr>

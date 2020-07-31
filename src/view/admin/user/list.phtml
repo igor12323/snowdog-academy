@@ -25,7 +25,7 @@ use Snowdog\Academy\Model\User as UserModel; ?>
                     <tr>
                         <td><?= $user->getId() ?></td>
                         <td><?= $user->getLogin() ?></td>
-                        <td><?= $user->isChild() ?></td>
+                        <td><?= $user->isChild() ? 'Yes':'No' ?></td>
                         <?php if (!$this->isActive): ?>
                             <th><a href="/admin/user/activate/<?= $user->getId() ?>">Activate</a></th>
                         <?php endif; ?>

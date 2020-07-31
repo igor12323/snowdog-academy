@@ -33,6 +33,7 @@ class Migration
         foreach ($migrations as $component => $version) {
             $currentVersion = $currentVersions[$component] ?? 0;
             for ($i = $currentVersion + 1; $i <= $version; ++$i) {
+                
                 $this->migrate($component, $i);
                 $executed[] = [
                     self::COMPONENT => $component,
@@ -61,7 +62,7 @@ class Migration
 
     private function migrate(string $component, int $i): void
     {
-        $className = $component . '\\Migration\\Version' . $i;
+        $className = $component . '\\Migration\\Version'.$i;//.$i
         $this->invoker->call($className);
 
         if($this->database->errorCode() > 0) {

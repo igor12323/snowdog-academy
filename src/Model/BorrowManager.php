@@ -18,7 +18,7 @@ class BorrowManager
     {
         $query = $this->database->prepare
         ('SELECT * FROM books
-        WHERE id in (select book_id from borrows where datediff(now(),borrowed_at)>:number_of_days)');
+        WHERE id in (select book_id from borrows where datediff(now(),borrowed_at)>=:number_of_days)');
          $query->bindParam(':number_of_days', $number_of_days, Database::PARAM_INT);
          $query->execute();
         return $query->fetchAll(Database::FETCH_CLASS,Book::class);
