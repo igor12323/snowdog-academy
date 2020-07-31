@@ -1,48 +1,49 @@
 function checkValue() {
     if(!isNaN(document.getElementById("isbn").value))
     {
-        if((document.getElementById("isbn").value).length==13)
+        if((document.getElementById("isbn").value).length==13||(document.getElementById("isbn").value).length==10)
         {
-        document.getElementById("loadBook").disabled=false;
+        document.getElementById("loadBook").style.visibility="visible";
         }
         else
         {
-            document.getElementById("loadBook").disabled=true;
+            document.getElementById("loadBook").style.visibility="hidden";
         }
     }
     else
     {
-        document.getElementById("loadBook").disabled=true;
+        document.getElementById("loadBook").style.visibility="hidden";
     }
+
 }
+
 
 function getValues()
 {
-    url="https://openlibrary.org/api/books?bibkeys=ISBN:"+document.getElementById("isbn").value+"&jscmd=data&format=json";
-    var request = new XMLHttpRequest();
-    request.open('GET', url, true);
-    request.onload = function() {
-    if (this.status >= 200 && this.status < 400) {
-        var data = JSON.parse(this.response);
-        var property=Object.getOwnPropertyNames(data);
-        if(property.length==0)
-        {
-            document.getElementById("book-title").value="";
-            document.getElementById("author").value="";
-            document.getElementById("loadBook").disabled=true;
-        }
-        else
-        {
-            document.getElementById("book-title").value=data[property[0]].title;
-            document.getElementById("author").value=data[property[0]].authors[0].name;
-            document.getElementById("loadBook").disabled=true;
-        }
-    } else {
-        alert("Error!");
+url="https://openlibrary.org/api/books?bibkeys=ISBN:"+document.getElementById("isbn").value+"&jscmd=data&format=json";
+var request = new XMLHttpRequest();
+request.open('GET', url, true);
+request.onload = function() {
+if (this.status >= 200 && this.status < 400) {
+    var data = JSON.parse(this.response);
+    var property=Object.getOwnPropertyNames(data);
+    if(property.length==0)
+    {
+        document.getElementById("book-title").value="";
+        document.getElementById("author").value="";
+        alert("Book with ISBN: "+document.getElementById("isbn").value+" doesn't exist!");
     }
-    };
-    request.onerror = function() {
-    alert("Connection error!");
-    };
-    request.send();
+    else
+    {
+        document.getElementById("book-title").value=data[property[0]].title;
+        document.getElementById("author").value=data[property[0]].authors[0].name;
+    }
+} else {
+    alert("Error!");
+}
+};
+request.onerror = function() {
+alert("Connection error!");
+};
+request.send();
 }
