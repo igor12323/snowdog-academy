@@ -25,17 +25,15 @@ class BookManager
         return (int) $this->database->lastInsertId();
     }
 
-    public function update(int $id, string $title, string $author, string $isbn): void
+    public function update(int $id, string $title, string $author, string $isbn,bool $is_for_child): void
     {
-        $statement = $this->database->prepare('UPDATE books SET title = :title, author = :author, isbn = :isbn WHERE id = :id');
-        $binds = [
-            ':id' => $id,
-            ':title' => $title,
-            ':author' => $author,
-            ':isbn' => $isbn
-        ];
-
-        $statement->execute($binds);
+        $statement = $this->database->prepare('UPDATE books SET title = :title, author = :author, isbn = :isbn, is_for_child=:is_for_child WHERE id = :id');
+        $statement->bindParam(':id', $id, Database::PARAM_INT);
+        $statement->bindParam(':title', $title, Database::PARAM_STR);
+        $statement->bindParam(':author', $author, Database::PARAM_STR);
+        $statement->bindParam(':isbn', $isbn, Database::PARAM_STR);
+        $statement->bindParam(':is_for_child', $is_for_child, Database::PARAM_BOOL);
+        $statement->execute();
     }
 
     public function getBookById(int $id)
