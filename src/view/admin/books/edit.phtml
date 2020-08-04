@@ -1,7 +1,7 @@
 <?php use Snowdog\Academy\Model\Book;
 
 require_once(__DIR__ . '/../../common/header.phtml');
-$path=__DIR__.'/editScripts.js';
+$path='/Scripts/editScripts.js';
 $action = '/admin/new_book';
 if ($this->book instanceof Book) {
     $title = $this->book->getTitle();

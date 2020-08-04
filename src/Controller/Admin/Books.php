@@ -44,7 +44,7 @@ class Books extends AdminAbstract
         }
         $this->bookManager->create($title, $author, $isbn);
 
-        $_SESSION['flash'] = "Book $title by $author saved $forChild!";
+        $_SESSION['flash'] = "Book $title by $author saved!";
         header('Location: /admin');
         
     }
@@ -68,14 +68,14 @@ class Books extends AdminAbstract
         $isbn = $_POST['isbn'];
         $forChild=$_POST['forChild'];
 
-        if (empty($title) || empty($author) || empty($isbn)) {
-            $_SESSION['flash'] = "Missing data $forChild";
+        if (empty($title) || empty($author) || empty($isbn)||empty($forChild)) {
+            $_SESSION['flash'] = "Missing data";
             header('Location: ' . $_SERVER['HTTP_REFERER']);
             return;
         }
         $this->bookManager->update($id, $title, $author, $isbn,$forChild);
 
-        $_SESSION['flash'] = "Book $title by $author saved $forChild!";
+        $_SESSION['flash'] = "Book $title by $author saved!";
         header('Location: /admin');
     }
     

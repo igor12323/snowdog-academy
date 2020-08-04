@@ -14,9 +14,7 @@ function checkValue() {
     {
         document.getElementById("loadBook").style.visibility="hidden";
     }
-
 }
-
 
 function getValues()
 {
@@ -26,8 +24,8 @@ request.open('GET', url, true);
 request.onload = function() {
 if (this.status >= 200 && this.status < 400) {
     var data = JSON.parse(this.response);
-    var property=Object.getOwnPropertyNames(data);
-    if(property.length==0)
+    var propertyNames=Object.getOwnPropertyNames(data);
+    if(propertyNames.length==0)
     {
         document.getElementById("book-title").value="";
         document.getElementById("author").value="";
@@ -35,15 +33,17 @@ if (this.status >= 200 && this.status < 400) {
     }
     else
     {
-        document.getElementById("book-title").value=data[property[0]].title;
-        document.getElementById("author").value=data[property[0]].authors[0].name;
+        document.getElementById("book-title").value="";
+        document.getElementById("author").value="";
+        document.getElementById("book-title").value=data[propertyNames[0]].title;
+        document.getElementById("author").value=data[propertyNames[0]].authors[0].name;
     }
-} else {
+} 
+else {
     alert("Error!");
 }
 };
 request.onerror = function() {
 alert("Connection error!");
 };
-request.send();
 }
